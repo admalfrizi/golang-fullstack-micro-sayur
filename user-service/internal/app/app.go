@@ -2,8 +2,8 @@ package app
 
 import (
 	"user-service/utils/validator"
-	"github.com/go-playground/validator/translations/en"
-	"github.com/labstack/echo/middleware"
+	"github.com/go-playground/validator/v10/translations/en"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/echo/v4"
 )
 
