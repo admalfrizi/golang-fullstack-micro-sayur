@@ -10,7 +10,7 @@ var Ctx = context.Background()
 
 func NewRedisClient() *redis.Client {
 	client := redis.NewClient(&redis.Options{
-		Addr: "redis-user:6379",
+		Addr: "localhost:6379",
 	})
 
 	_, err := client.Ping(Ctx).Result()

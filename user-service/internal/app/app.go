@@ -34,13 +34,16 @@ func RunServer() {
 
 	e := echo.New()
 	e.Use(middleware.CORS())
-	e.Group("/api")
 
 	customValidator := validator.NewValidator()
 	en.RegisterDefaultTranslations(customValidator.Validator, customValidator.Translator)
 	e.Validator = customValidator
 
-	handler.NewUserHandler(e,userService)
+	e.GET("/api/check",func(c echo.Context) error {
+		return c.String(200, "Ok")
+	})
+
+	handler.NewUserHandler(e,userService, cfg)
 
 	go func () {
 		if cfg.App.AppPort == "" {

@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"time"
 	"user-service/config"
 	"user-service/internal/adapter/repository"
 	"user-service/internal/core/domain/entity"
@@ -32,13 +33,29 @@ func (u *userService) SignIn(ctx context.Context, req entity.UserEntity) (*entit
 
 	if checkPass := conv.CheckPasswordHash(req.Password, user.Password); !checkPass {
 		err = errors.New("password is incorrect")
-		log.Errorf("[UserService-1] SignIn: %v", err)
+		log.Errorf("[UserService-2] SignIn: %v", err)
 		return nil, "",err
 	}
 
 	token, err := u.jwtService.GenerateToken(user.ID)
 	if err != nil {
-		log.Errorf("[UserService-1] SignIn: %v", err)
+		log.Errorf("[UserService-3] SignIn: %v", err)
+		return nil,"",err
+	}
+
+	sessionData := map[string]interface{} {
+		"user_id": user.ID,
+		"name": user.Name,
+		"email": user.Email,
+		"logged_in": true,
+		"created_at": time.Now().String,
+		"token": token,
+	}
+
+	redisConn := config.NewRedisClient()
+	err = redisConn.HSet(ctx, user.Email, sessionData).Err()
+	if err != nil {
+		log.Errorf("[UserService-4] SignIn: %v", err)
 		return nil,"",err
 	}
 
