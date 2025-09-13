@@ -89,7 +89,7 @@ func NewUserHandler(e *echo.Echo,userService service.UserServiceInterface, cfg *
 	e.POST("/signIn", userHandler.SignIn)
 
 	mid := adapter.NewMiddlewareAdapter(cfg)
-	adminGroup := e.Group("admin/dashboard", mid.CheckToken())
+	adminGroup := e.Group("/admin", mid.CheckToken())
 	adminGroup.GET("/check", func(c echo.Context) error {
 		return c.String(200, "Ok")
 	})

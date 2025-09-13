@@ -43,7 +43,7 @@ func RunServer() {
 		return c.String(200, "Ok")
 	})
 
-	handler.NewUserHandler(e,userService, cfg)
+	handler.NewUserHandler(e, userService, cfg)
 
 	go func () {
 		if cfg.App.AppPort == "" {

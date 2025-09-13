@@ -48,7 +48,7 @@ func (u *userService) SignIn(ctx context.Context, req entity.UserEntity) (*entit
 		"name": user.Name,
 		"email": user.Email,
 		"logged_in": true,
-		"created_at": time.Now().String,
+		"created_at": time.Now().String(),
 		"token": token,
 	}
 
