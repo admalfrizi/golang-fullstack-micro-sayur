@@ -24,6 +24,7 @@ require (
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/rabbitmq/amqp091-go v1.10.0 // indirect
 	github.com/redis/go-redis/v9 v9.13.0 // indirect
 	github.com/spf13/cobra v1.10.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect

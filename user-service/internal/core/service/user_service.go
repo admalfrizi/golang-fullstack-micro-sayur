@@ -3,8 +3,10 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 	"user-service/config"
+	"user-service/internal/adapter/message"
 	"user-service/internal/adapter/repository"
 	"user-service/internal/core/domain/entity"
 	"user-service/utils/conv"
@@ -41,6 +43,17 @@ func (u *userService) CreateUserAccount(ctx context.Context, req entity.UserEnti
 		log.Errorf("[UserService-2] CreateUserAccount : %v", err)
 		return err
 	}
+
+	urlVerify := fmt.Sprintf("http://localhost:8080/verify?token=%v", req.Token)
+	messageParam := fmt.Sprintf("Please verify your account with click link below: %v", urlVerify)
+	err = message.PublishMessage(req.Email, messageParam, "email_verification")
+
+	if err != nil {
+		log.Errorf("[UserService-3] CreateUserAccount : %v", err)
+		return err
+	}
+
+	return nil;
 }
 
 // SignIn implements UserServiceInterface.
