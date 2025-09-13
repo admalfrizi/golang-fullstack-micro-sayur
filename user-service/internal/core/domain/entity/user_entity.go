@@ -11,4 +11,5 @@ type UserEntity struct {
 	Lng		 string
 	Phone	 string
 	IsVerified bool
+	Token 	 string
 }
